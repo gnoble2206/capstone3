@@ -1,0 +1,17 @@
+lpredicting fantasy football points - target is points; input previous points, opponent_rank, 
+predicting prop bets - vs what sport books have listed
+doppleganger app - celebfaces kaggle dataset
+new favorite player - recommender - favorite player in one league is player in another league
+Data Science GUI platform:
+-Questions to determine best algorithm, runs in background and outputs prediction
+
+The Rundown API - gets line across various sports books
+-Could I combine with my own projections?
+-Search for arbitrage
+-Monitor Line movement
+-Develop own model with X% degree of certainty and compare to lines
+
+
+-https://www.baseball-reference.com/teams/tgl.cgi?team=ARI&t=b&year=2016#rowsum_desc
+
+
