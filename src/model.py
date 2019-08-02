@@ -4,6 +4,7 @@
 import pandas as pd
 import numpy as np 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.model_selection import cross_val_score
@@ -147,7 +148,12 @@ def main(clf, stats_odds1):
     clf.predict_proba(X_test)
 
     train_accuracy = np.mean(cross_val_score(clf, X_train, y_train, cv=5, scoring='accuracy'))
+    recall = np.mean(cross_val_score(clf, X_train, y_train, cv=5, scoring='recall'))
+    precision = np.mean(cross_val_score(clf, X_train, y_train, cv=5, scoring='precision'))
+    print('Random Forest Train: ')
     print('Train Accuracy: ', train_accuracy)
+    print('Recall: ', recall)
+    print('Precision: ', precision)
 
     list(zip(X, clf.feature_importances_))
 
@@ -157,16 +163,36 @@ def main(clf, stats_odds1):
     plt.bar(*zip(*feature_import))
     plt.xticks(rotation='vertical')
 
+    ####Logistic Regression
+    clf1 = LogisticRegression()
+    clf1.fit(X_train, y_train)
+    y_preds1 = clf1.predict(X_test)
+    train_accuracy1 = np.mean(cross_val_score(clf1, X_train, y_train, cv=5, scoring='accuracy'))
+    recall1 = np.mean(cross_val_score(clf1, X_train, y_train, cv=5, scoring='recall'))
+    precision1 = np.mean(cross_val_score(clf1, X_train, y_train, cv=5, scoring='precision'))
+    print("Logistic Regression Train:")
+    print("Train Accuracy: ", train_accuracy1)
+    print("Recall: ", recall1)
+    print("Precision: ", precision1)
+
     #### test results on holdout
     y = stats_odds1_17.pop('result')
 
     X = stats_odds1_17
 
     y_preds = clf.predict(X)
-
     probs = clf.predict_proba(X)
+    y_pred1 = clf1.predict(X)
 
+    print("Random Forest Holdout:")
     print("Holdout Accuracy:",metrics.accuracy_score(y, y_preds))
+    print("Holdout Recall:", metrics.recall_score(y, y_preds))
+    print("Holdout Precision:", metrics.precision_score(y, y_preds))
+
+    print("Logistic Regression Holdout:")
+    print("Train Accuracy: ",metrics.accuracy_score(y, y_pred1))
+    print("Recall: ", metrics.recall_score(y, y_pred1))
+    print("Precision: ", metrics.precision_score(y, y_pred1))
 
 
     X['prob_0'] = probs[:,0] 
@@ -228,63 +254,7 @@ if __name__ == '__main__':
 
 
 
-# joblib.dump(clf, 'saved_model.pkl')
 
-
-# ##### what would have been the ROI on X_test
-
-# y1 = y_test
-# X1 = X_test
-
-# y_preds = clf.predict(X1)
-
-# y_probs = clf.predict_proba(X1)
-
-# print("Accuracy:",metrics.accuracy_score(y1, y_preds))
-
-# X1['prob_0'] = y_probs[:,0] 
-# X1['prob_1'] = y_probs[:,1]
-
-# X1['y_preds'] = y_preds
-
-# X1['result'] = y1
-
-# X1['Home Open ML'] = hopen_ml_16
-# X1['Open Visitor ML'] = vopen_ml_16
-
-# X1['Visitors Odds Prob'] = X1['Open Visitor ML'].apply(lambda x: abs(x)/(abs(x) + 100) if x < 100 else 100/(x+100))
-# X1['Home Odds Prob'] = X1['Home Open ML'].apply(lambda x: abs(x)/(abs(x) + 100) if x < 100 else 100/(x+100))
-
-# X1['max_model_prob'] = X1[["prob_0", "prob_1"]].max(axis=1) * 100
-
-# X1['max_odds_prob'] = X1[['Visitors Odds Prob', 'Home Odds Prob']].max(axis=1) * 100
-
-# X1['potential edge'] = X1['max_model_prob'] - X['max_odds_prob']
-
-# X1['wager'] = X1['potential edge'].apply(lambda x: 10 if x > 0 else 0)
-
-# X1['Home Payout'] = X1['Home Open ML'].apply(lambda x: (100/abs(x) + 1) if x < 100 else (x/100 + 1))                               
-# X1['Visitor Payout'] = X1['Open Visitor ML'].apply(lambda x: (100/abs(x) + 1) if x < 100 else (x/100 + 1))        
-# X1['Home Payout'] = X1['Home Open ML'].apply(lambda x: (100/abs(x) + 1)*10 if x < 100 else (x/100 + 1)*10)                               
-# X1['Visitor Payout'] = X1['Open Visitor ML'].apply(lambda x: (100/abs(x) + 1)*10 if x < 100 else (x/100 + 1)*10) 
-
-# X1['incorrect'] = np.where(X1['result'] == X1['y_preds'], 0, 1)
-
-# conditions = [
-#     (X1['incorrect'] == 0) & (X1['y_preds'] == 0) & (X1['wager'] == 10),
-#     (X1['incorrect'] == 0) & (X1['y_preds'] == 1) & (X1['wager'] == 10),
-#     (X1['incorrect'] == 1) & (X1['wager'] == 10),
-#     (X1['incorrect'] == 1) & (X1['wager'] == 0)]
-# choices = [X1['Visitor Payout'], X1['Home Payout'], 0, 0]
-# X1['payout'] = np.select(conditions, choices)
-
-# X1['payout'].sum()
-
-# X1['wager'].sum()
-
-# roi = (X1['payout'].sum() / X1['wager'].sum() - 1) * 100
-
-# print('ROI = {}'.format(roi))
 
 
 
