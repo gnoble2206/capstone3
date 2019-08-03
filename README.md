@@ -13,7 +13,7 @@ a model to see if the odds accurately reflect the win probability of a certain t
 
 ## The Dataset
 The dataset used for this project was a complete list of all games for the years 2014-2017\*.  The games were then filtered for only those games where this specific strategy applies.  The original tables were approximately 19,000 rows, which were one
-row per team per game.  The rows were split and then merged on the game_id column so that each row represented one game.  The final total row count for analyzed for the purpose of this study was approximately 9000 rows.  The columns included date, home and visitor starting pitchers, inning-by-inning run total for each team, final score for each team, moneyline odds, runline odds and over/under odds. I then used scraped baseball statistics from baseball-reference.com for the corresponding seasons and games for each team to develop the features within the model.
+row per team per game.  The rows were split and then merged on the game_id column so that each row represented one game.  The final total row count for analyzed for the purpose of this study was approximately 9500 rows. I then used scraped baseball statistics from baseball-reference.com for the corresponding seasons and games for each team to develop the features within the model.
 
 ## Methods
 
