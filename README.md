@@ -5,7 +5,7 @@ to draft their own sports betting legislation as desired. Several states have al
 
 ## Concept
 
-<img alt="Edge Explanation" src="images/project_chart.png" width=750> 
+<img alt="Edge Explanation" src="images/project_chart.png" width=600> 
 
 The above is a chart explaining the mechanics of this project. Using historical odds for the 2014, 2015, 2016, and 2017 season, my goal was to develop 
 a model to see if the odds accurately reflect the win probability of a certain team winning a game. My model produces a win probability that when compared to the implied probability derived from the market betting odds could potentially detect an edge in the favor of a bettor.  By identifying and wagering on games with a positive edge, the goal was to have a positive Return on Investment (ROI) for a full season.
