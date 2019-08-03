@@ -24,4 +24,5 @@ Preliminary results indicate that the model was profitable in 2017; however, fur
 
 ### References 
 * https://www.sportsbookreviewsonline.com/scoresoddsarchives/mlb/mlboddsarchives.htm
+* https://www.baseball-reference.com
 
